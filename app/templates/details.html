@@ -1,0 +1,115 @@
+{% extends "layout.html" %}
+
+{% block content %}
+      <!-- Main component for a primary marketing message or call to action -->
+
+<div class="row">
+  <div class="col-lg-3">
+    <h1>
+      {{city}}
+    </h1>
+    <h6 class="text-muted">
+      Last updated: {{last_updated}}
+    </h6>
+    <div class="bs-example">
+      <div class="list-group">
+        {% for row in list %}
+          {% if row['id'] == trend_id %}
+            <a class="list-group-item active" href="details?city={{city}}&trend_id={{row['id']}}">{{row['phrase']}}</a>
+          {% else %}
+            <a class="list-group-item" href="details?city={{city}}&trend_id={{row['id']}}">{{row['phrase']}}</a>
+          {% endif %}
+        {% else %}
+          <a href="#" class="list-group-item">Unbelievable.  No trend so far</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-lg-9">
+    </br>
+    </br>
+    </br>
+    </br>
+  
+    <h2>
+        Positive Percentage: 
+    </h2>
+    <div class="progress" style="margin-bottom: 9px;">
+      <div class="progress-bar progress-bar-success" style="width:{{sentiment*100}}%">:)</div>
+      <div class="progress-bar progress-bar-danger" style="width:{{(1-sentiment)*100}}%">:(</div>
+    </div>
+
+    <h2>
+      Related Words in Tweets:
+    </h2>
+    
+    <div class="bs-example" style="margin-bottom: 30px;">
+      {% for word in keywords %}
+        <span class="label label-success"> {{word}}</span>
+      {% else %}
+        <a href="#" class="list-group-item">Unbelievable.  No keyswords so far</a>
+      {% endfor %}
+    </div>
+    
+    <div class="bs-example" style="margin-bottom: 30px;">
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-primary container-toggler" data-container-id="#Tweets">
+        <input type="radio" name="options" id="option1"> Tweets
+      </label>
+      <label class="btn btn-primary container-toggler" data-container-id="#News">
+        <input type="radio" name="options" id="option2"> News
+      </label>
+    </div>
+    </div>
+
+    <div class="container-toggle" id="Tweets">
+      {% for row in tweets %}
+        {% if row['sentiment'] == 1 %}
+          <div class="alert alert-dismissable alert-success">
+            {{row['text']}}
+            <small class="text-muted">
+              {{row['user']}}
+              <cite title="Source Title">
+                @ {{row['location']}}
+              </cite>
+            </small>
+          </div>
+        {% else %}
+          <div class="alert alert-dismissable alert-danger">
+            {{row['text']}}
+            <small class="text-muted">
+              {{row['user']}}
+              <cite title="Source Title">
+                @ {{row['location']}}
+              </cite>
+            </small>
+          </div>
+        {% endif %}
+      {% else %}
+        <a href="#" class="list-group-item">Unbelievable.  No tweet so far</a>
+      {% endfor %}  
+    </div>
+
+    <div class="container-toggle" id="News">
+      <div class="bs-example">
+          {% for row in news %}
+            <div class="alert alert-dismissable alert-info">
+              <a href="{{row['url']}}">
+                <h4>{{row['title']}}</h4>
+                <p class="text-muted">{{row['url']}}</p>
+                <span class="badge">{{row['clicks']}}</span>
+              </a>
+            </div>
+          {% else %}
+            <a href="#" class="list-group-item">Unbelievable.  No news so far</a>
+          {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

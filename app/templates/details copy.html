@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block content %}
+      <!-- Main component for a primary marketing message or call to action -->
+
+<div class="row">
+  <div class="col-lg-3">
+    <h1>
+      {{city}}
+    </h1>
+
+    <div class="bs-example">
+      <div class="list-group">
+        {% for row in list %}
+          {% if row['id'] == trend_id %}
+            <a class="list-group-item active" href="details?city={{city}}&trend_id={{row['id']}}">{{row['phrase']}}</a>
+          {% else %}
+            <a class="list-group-item" href="details?city={{city}}&trend_id={{row['id']}}">{{row['phrase']}}</a>
+          {% endif %}
+        {% else %}
+          <a href="#" class="list-group-item">Unbelievable.  No trend so far</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-lg-9">
+    <h2>
+        Sentiment Score: 
+    </h2>
+    <span class="badge" font-size="28px">
+      {{sentiment}}
+    </span>
+
+
+    <h2>
+      Related Words:
+    </h2>
+    
+    <div class="bs-example" style="margin-bottom: 30px;">
+      {% for word in keywords %}
+        <span class="label label-success" font-size="28px"> {{word}}   </span>
+      {% else %}
+        <a href="#" class="list-group-item">Unbelievable.  No news so far</a>
+      {% endfor %}
+    </div>
+    
+
+    <h2>
+      Related News
+    </h2>
+    <div class="bs-example">
+      <div class="list-group">
+        {% for row in news %}
+          <a class="list-group-item" href="{{row['url']}}">
+            <h4 class="list-group-item-heading">{{row['title']}}</h4>
+            <span class="badge">{{row['clicks']}}</span>
+            <p class="list-group-item-text">{{row['url']}}</p>
+          </a>
+        {% else %}
+          <a href="#" class="list-group-item">Unbelievable.  No news so far</a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <h2>
+      Related Local Tweets
+    </h2>
+    {% for row in tweets %}
+    <blockquote>
+      <p>{{row['text']}}</p>
+      <small>
+        {{row['user']}}
+        <cite title="Source Title">
+          @ {{row['location']}}
+        </cite>
+      </small>
+    </blockquote>
+    {% else %}
+      <a href="#" class="list-group-item">Unbelievable.  No tweet so far</a>
+    {% endfor %}  
+  </div>
+</div>
+
+
+{% endblock %}

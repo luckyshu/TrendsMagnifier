@@ -1,0 +1,5 @@
+*.pyc
+*.tmp
+*.log
+news_result
+sentiment/*.csv

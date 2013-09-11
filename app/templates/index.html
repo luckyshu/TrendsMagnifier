@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block content %}
+      <!-- Main component for a primary marketing message or call to action -->
+      <div>
+        <h1>Choose the city</h1>
+        
+        <form class="bs-example form-horizontal" method="post" action="details">
+          <fieldset>
+            <div class="form-group">
+              <div class="col-lg-5">
+                <select name="city" class="form-control">
+                  {% for row in cities %}
+                    <option>{{row[0]}}</option>
+                  {% else %}
+                    <option>Unbelievable.  No city so far</option>
+                  {% endfor %}
+                </select>
+              </div>  
+            </div>
+            <div class="form-group">
+              <div class="col-lg-5 col-lg-offset-4">
+                <button class="btn btn-primary" type="submit">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      
+{% endblock %}
